@@ -112,8 +112,8 @@ fn parse_queries_attribute(attrs: &[Attribute]) -> Option<String> {
 
 /// Given a `syn::Type` that should look like `PatternField<T>`,
 /// return the `T`.
-fn extract_pattern_field_inner(ty: &syn::Type) -> Option<syn::Type> {
-    let path = match ty {
+fn extract_pattern_field_inner(field_type: &syn::Type) -> Option<syn::Type> {
+    let path = match field_type {
         syn::Type::Path(type_path) => &type_path.path,
         _ => return None,
     };
