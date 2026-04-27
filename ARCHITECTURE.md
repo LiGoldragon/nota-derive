@@ -36,13 +36,14 @@ crates to be separate from regular library crates.
 
 ```
 src/
-├── lib.rs                # 5 #[proc_macro_derive] entry points
-├── nota_record.rs        # NotaRecord codegen
-├── nota_enum.rs          # NotaEnum codegen
-├── nota_transparent.rs   # NotaTransparent codegen
-├── nexus_pattern.rs      # NexusPattern codegen (with bind-name validation)
-├── nexus_verb.rs         # NexusVerb codegen (head-identifier dispatch)
-└── shared.rs             # field/variant introspection helpers
+├── lib.rs                  # 6 #[proc_macro_derive] entry points
+├── nota_record.rs          # NotaRecord codegen
+├── nota_enum.rs            # NotaEnum codegen
+├── nota_transparent.rs     # NotaTransparent codegen
+├── nota_try_transparent.rs # NotaTryTransparent codegen (fallible newtype)
+├── nexus_pattern.rs        # NexusPattern codegen (with bind-name validation)
+├── nexus_verb.rs           # NexusVerb codegen (head-identifier dispatch)
+└── shared.rs               # field/variant introspection helpers
 
 tests/
 └── compile_fail/         # trybuild compile-fail cases
@@ -52,12 +53,9 @@ tests/
 
 - The derives target the trait + runtime API in
   [`nota-codec`](https://github.com/LiGoldragon/nota-codec/blob/main/ARCHITECTURE.md).
-- Both crates exist as the serde replacement at the
-  nota-and-nexus text layer — see
-  [mentci reports/098](https://github.com/LiGoldragon/mentci/blob/main/reports/098-serde-replacement-decision-2026-04-27.md)
-  for the decision and
-  [mentci reports/099](https://github.com/LiGoldragon/mentci/blob/main/reports/099-custom-derive-design-2026-04-27.md)
-  for the design.
+- Both crates exist as the typed text codec for the nota and
+  nexus dialects — replacing the previous serde-based path with
+  closed-enum dispatch.
 - The derives align with criome's perfect-specificity invariant
   (closed enum dispatch, no string-tagged routing) — see
   [criome ARCHITECTURE.md §2 Invariant D](https://github.com/LiGoldragon/criome/blob/main/ARCHITECTURE.md#invariant-d).

@@ -1,6 +1,6 @@
 //! nota-derive — proc-macro derives for `nota-codec`.
 //!
-//! Five derives. All re-exported through `nota-codec` so users
+//! Six derives. All re-exported through `nota-codec` so users
 //! depend on a single crate. See the per-derive modules for the
 //! codegen logic; this file is just dispatch.
 
