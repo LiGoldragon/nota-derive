@@ -44,7 +44,7 @@ pub fn expand(input: DeriveInput) -> TokenStream {
                 let inner = <#inner_type as ::nota_codec::NotaDecode>::decode(decoder)?;
                 Self::try_new(inner).map_err(|error| ::nota_codec::Error::Validation {
                     type_name: stringify!(#name),
-                    message: ::core::format!("{error}"),
+                    message: ::std::format!("{error}"),
                 })
             }
         }
