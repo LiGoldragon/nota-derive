@@ -12,6 +12,7 @@ mod nexus_verb;
 mod nota_enum;
 mod nota_record;
 mod nota_transparent;
+mod nota_try_transparent;
 mod shared;
 
 /// Derive `NotaEncode` + `NotaDecode` for a struct that
@@ -46,10 +47,37 @@ pub fn derive_nota_enum(input: TokenStream) -> TokenStream {
 /// Also emits `From<Inner> for Self` and `From<Self> for Inner`
 /// so the wrapped field can stay private without callers
 /// needing direct field access.
+///
+/// For newtypes whose construction is **fallible** (e.g.
+/// `SshPubKey(String)` that validates ed25519 base64), use
+/// [`NotaTryTransparent`] instead.
 #[proc_macro_derive(NotaTransparent)]
 pub fn derive_nota_transparent(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     nota_transparent::expand(input).into()
+}
+
+/// Derive `NotaEncode` + `NotaDecode` for a tuple-struct
+/// newtype whose construction is **fallible** — the type
+/// must expose `fn try_new(inner: Inner) -> Result<Self, E>`
+/// where `E: ::core::fmt::Display`. The decoder runs
+/// `try_new` after parsing the inner value; failures become
+/// [`nota_codec::Error::Validation`] carrying the type name
+/// + the validator's error message.
+///
+/// Use this for newtypes that enforce format constraints
+/// (`SshPubKey` ed25519 base64, `Ipv6Addr`-parseable strings,
+/// hex digests of fixed length, …) so that the validator
+/// runs on every decode and malformed wire data fails at the
+/// codec boundary rather than at first use.
+///
+/// Emits `From<Self> for Inner` (read-out is infallible) but
+/// NOT `From<Inner> for Self` (construction goes through
+/// `try_new`).
+#[proc_macro_derive(NotaTryTransparent)]
+pub fn derive_nota_try_transparent(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as DeriveInput);
+    nota_try_transparent::expand(input).into()
 }
 
 /// Derive `NotaEncode` + `NotaDecode` for a `*Query` struct
