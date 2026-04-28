@@ -14,7 +14,7 @@ crates to be separate from regular library crates.
 ## Boundaries
 
 **Owns:**
-- The five `#[proc_macro_derive]` entry points listed in
+- The six `#[proc_macro_derive]` entry points listed in
   [README.md](README.md).
 - The codegen logic that turns a `DeriveInput` into impls of
   `NotaEncode` + `NotaDecode`.
