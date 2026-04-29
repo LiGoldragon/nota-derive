@@ -56,6 +56,18 @@ tests/
 - Both crates exist as the typed text codec for the nota and
   nexus dialects — replacing the previous serde-based path with
   closed-enum dispatch.
+- **Consumers.** Users depend on
+  [`nota-codec`](https://github.com/LiGoldragon/nota-codec),
+  which re-exports these derives — they never name `nota-derive`
+  directly. The primary downstream is
+  [`signal`](https://github.com/LiGoldragon/signal): every record
+  kind, IR enum, and verb type in signal carries one of these
+  derives (`NotaRecord` on data-kinds like `Node` / `Edge`,
+  `NexusVerb` on closed verb enums, `NotaEnum` on tag-style
+  enums, `NotaTransparent` / `NotaTryTransparent` on newtypes
+  like `Slot`). A new derive lands here only when signal (or
+  another typed-wire crate) needs a wire shape the existing six
+  cannot express.
 - The derives align with criome's perfect-specificity invariant
   (closed enum dispatch, no string-tagged routing) — see
   [criome ARCHITECTURE.md §2 Invariant D](https://github.com/LiGoldragon/criome/blob/main/ARCHITECTURE.md#invariant-d).
