@@ -15,7 +15,7 @@ crates to be separate from regular library crates.
 
 **Owns:**
 - The six `#[proc_macro_derive]` entry points listed in
-  [README.md](README.md).
+  `README.md`.
 - The codegen logic that turns a `DeriveInput` into impls of
   `NotaEncode` + `NotaDecode`.
 - trybuild-based compile-fail tests that verify malformed
