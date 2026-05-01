@@ -2,7 +2,7 @@
 
 ## Role
 
-Proc-macro derives for [`nota-codec`](https://github.com/LiGoldragon/nota-codec).
+Proc-macro derives for `nota-codec`.
 This crate is **only** the proc-macro logic; the runtime
 (traits, `Decoder`, `Encoder`) lives in `nota-codec` and is
 re-exported alongside these derives so users depend on a
@@ -52,15 +52,15 @@ tests/
 ## Cross-cutting context
 
 - The derives target the trait + runtime API in
-  [`nota-codec`](https://github.com/LiGoldragon/nota-codec/blob/main/ARCHITECTURE.md).
+  `nota-codec`.
 - Both crates exist as the typed text codec for the nota and
   nexus dialects — replacing the previous serde-based path with
   closed-enum dispatch.
 - **Consumers.** Users depend on
-  [`nota-codec`](https://github.com/LiGoldragon/nota-codec),
+  `nota-codec`,
   which re-exports these derives — they never name `nota-derive`
   directly. The primary downstream is
-  [`signal`](https://github.com/LiGoldragon/signal): every record
+  `signal`: every record
   kind, IR enum, and verb type in signal carries one of these
   derives (`NotaRecord` on data-kinds like `Node` / `Edge`,
   `NexusVerb` on closed verb enums, `NotaEnum` on tag-style
@@ -70,7 +70,7 @@ tests/
   cannot express.
 - The derives align with criome's perfect-specificity invariant
   (closed enum dispatch, no string-tagged routing) — see
-  [criome ARCHITECTURE.md §2 Invariant D](https://github.com/LiGoldragon/criome/blob/main/ARCHITECTURE.md#invariant-d).
+  criome ARCHITECTURE.md §2 Invariant D.
 
 ## Status
 

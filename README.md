@@ -1,6 +1,6 @@
 # nota-derive
 
-Proc-macro derives for [`nota-codec`](https://github.com/LiGoldragon/nota-codec).
+Proc-macro derives for `nota-codec`.
 Six derives, all re-exported through `nota-codec` so users only
 depend on the runtime crate.
 
