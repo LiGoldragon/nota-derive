@@ -20,9 +20,10 @@ mod shared;
 /// field1 …)`; decodes from the same shape.
 ///
 /// The struct's fields must implement `NotaEncode` +
-/// `NotaDecode`. Optional fields (`Option<T>`) may appear only
-/// at the end of the struct; the wire form omits them when
-/// `None`.
+/// `NotaDecode`. Optional fields (`Option<T>`) encode `None`
+/// explicitly. Decoding also accepts omitted optionals at the
+/// record tail for compatibility; when a later field is present,
+/// an absent optional before it is written as explicit `None`.
 #[proc_macro_derive(NotaRecord)]
 pub fn derive_nota_record(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
